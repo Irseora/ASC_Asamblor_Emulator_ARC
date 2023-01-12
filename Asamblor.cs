@@ -5,29 +5,30 @@ namespace Asamblor
 {
     class Asamblor
     {
-        // Etichete:  start with 1 letter + any nr of letter/digit/_ + ':'
-        Regex label = new Regex(@"^[A-Za-z][A-Za-z0-9_]*:");
-
-        // Menmonice:
-        // 0 operanzi
-        Regex mnemonicOp0 = new Regex(@"jmpl");
-
-        // 1 operand
-        Regex mnemonicOp1 = new Regex(@"(sethi|call|be|bcs|bneg|bvs|ba|srl) (\%r[1-3]{1}[0-9]{,1})");
-
-        // 2 operanzi
-        Regex mnemonicOp2 = new Regex(@"(ld|st) (\%r[1-3]{1}[0-9]{,1}) (\%r[1-3]{1}[0-9]{,1})");
-
-        // 3 operanzi
-        Regex mnemonicOp3 = new Regex(@"(andcc|orcc|orncc) (\%r[1-3]{1}[0-9]{,1}) (\%r[1-3]{1}[0-9]{,1}) (\%r[1-3]{1}[0-9]{,1})");
+        // ---------- Operanzi:
+        /// <summary> Registru simplu: %r1, %r18 </summary>
+        Regex regSimple = new Regex(@"\%r[1-3]{1}[0-9]?");
+        /// <summary> Registru compus: %r1 + 49 </summary>
+        Regex regCompound = new Regex(@"\%r[1-3]{1}[0-9]?[+-]{1}[0-9]+");
+        /// <summary> Numar: 0, 48, 190 </summary>
+        Regex num = new Regex(@"[0-9]*");
+        /// <summary> Memorie simplu: [x], [Y] </summary>
+        Regex memSimple = new Regex(@"\[[a-zA-z]*\]");
+        /// <summary> Memorie compus: [x+8] </summary>
+        Regex memCompound = new Regex(@"\[a-zA-Z]*[+-]?[0-9]+\]");
 
 
+        // ---------- Etichete:
+        Regex label = new Regex(@"^[A-Za-z][A-Za-z0-9_]*\:");
+
+        // ---------- Menmonice:
+        Regex mnemonicOp0 = new Regex(@"jmpl");   // 0 operanzi
+        Regex mnemonicOp1 = new Regex(@"(sethi|call|be|bcs|bneg|bvs|ba|srl)");   // 1 operand
+        Regex mnemonicOp2 = new Regex(@"(ld|st)");   // 2 operanzi
+        Regex mnemonicOp3 = new Regex(@"(andcc|orcc|orncc)");   // 3 operanzi
 
 
-        // Operanzi:  '%' + 1 digit 1-3 + 0/1 digit 0-9
-        string operand = @"%r[1-3]{1}[0-9]{,1}";
-
-        // Comentariu:  '!' + any nr of any char, except newline
+        // ---------- Comentariu:
         Regex comment = new Regex(@"!.*");
 
 
